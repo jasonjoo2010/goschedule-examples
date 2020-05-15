@@ -11,19 +11,13 @@ import (
 	"github.com/jasonjoo2010/goschedule/store/redis"
 )
 
-var counterShared int = 0
-
 func main() {
-	manager, err := core.New(redis.New("/schedule/demo/func", "127.0.0.1", 6379))
+	manager, err := core.New(redis.New("/schedule/demo/simple", "127.0.0.1", 6379))
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	worker.RegisterFunc("DemoFunc", func(strategyId, param string) {
-		fmt.Println("current: ", counterShared)
-		counterShared++
-		time.Sleep(time.Second)
-	})
+	worker.Register(DemoStrategy{})
 	manager.Start()
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Kill, os.Interrupt)
@@ -34,7 +28,7 @@ LOOP:
 			manager.Shutdown()
 			break LOOP
 		default:
-			time.Sleep(time.Second)
 		}
+		time.Sleep(time.Second)
 	}
 }
