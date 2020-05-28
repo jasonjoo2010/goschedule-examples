@@ -17,7 +17,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	worker.Register(DemoStrategy{})
+	worker.Register(&DemoStrategy{})
 	manager.Start()
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Kill, os.Interrupt)

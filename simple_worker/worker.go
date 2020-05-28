@@ -35,7 +35,7 @@ func (demo *DemoStrategy) Start(strategyId, parameter string) {
 	fmt.Println("worker started")
 }
 
-func (demo *DemoStrategy) Stop(strategyId string) {
+func (demo *DemoStrategy) Stop(strategyId, parameter string) {
 	fmt.Println("prepare to stop")
 	demo.notifier <- 1
 	fmt.Println("worker exited")
