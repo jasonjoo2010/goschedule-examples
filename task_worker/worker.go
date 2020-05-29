@@ -24,6 +24,7 @@ func (demo baseTask) Select(parameter, ownSign string, items []definition.TaskIt
 		if !ok {
 			cnt = 1
 		}
+		fmt.Println("fetch for", item)
 		for i := 0; i < eachFetchNum; i++ {
 			result = append(result, fmt.Sprint(item.Id, ":", cnt))
 			cnt++

@@ -33,10 +33,10 @@ github.com/jasonjoo2010/enhanced-utils v0.0.0-20200415090139-0a0c720ec8f3 h1:ezM
 github.com/jasonjoo2010/enhanced-utils v0.0.0-20200415090139-0a0c720ec8f3/go.mod h1:u7jbH8cHV/qrM/1UuUtt++0AGthHQUWiNlYDbfJkCL8=
 github.com/jasonjoo2010/enhanced-utils/concurrent/distlock/redis v0.0.0-20200415090139-0a0c720ec8f3 h1:olAgkax3MCCFa7I3A48yvG8z9fcQM2WsJyDk7Kw4VbU=
 github.com/jasonjoo2010/enhanced-utils/concurrent/distlock/redis v0.0.0-20200415090139-0a0c720ec8f3/go.mod h1:LJ32Y+fITx+CIma9H5nvRSIEF5axlGRtHQFQnzKlZsM=
-github.com/jasonjoo2010/goschedule v0.0.0-20200528085553-cf2b5ec25568 h1:T/dWzf00UnLCRFoiRC9iFVALMvnACkeBV0dSx73+DQM=
-github.com/jasonjoo2010/goschedule v0.0.0-20200528085553-cf2b5ec25568/go.mod h1:XHhgvjbfsQhdlz29+8LjzfOSiRlKXVKRniZnibvbZkc=
-github.com/jasonjoo2010/goschedule/store/redis v0.0.0-20200528085553-cf2b5ec25568 h1:YbTDFBhdFGojOlWTN+Qr5JQkIBZ5GKLpkGfMRHB7txE=
-github.com/jasonjoo2010/goschedule/store/redis v0.0.0-20200528085553-cf2b5ec25568/go.mod h1:PAnnOODpWX6M8sc5MXV2whRoG9h8qCYghdOLBf5RqBU=
+github.com/jasonjoo2010/goschedule v0.0.0-20200529094844-293e19e91d6e h1:dcNPRoSh2vN92m9j736flddhAP666WRR2azJLzylB4o=
+github.com/jasonjoo2010/goschedule v0.0.0-20200529094844-293e19e91d6e/go.mod h1:XHhgvjbfsQhdlz29+8LjzfOSiRlKXVKRniZnibvbZkc=
+github.com/jasonjoo2010/goschedule/store/redis v0.0.0-20200529094844-293e19e91d6e h1:aDtK/tI/52SViqO3N86eFNo0GI77UOR3gbAZ5ENciiI=
+github.com/jasonjoo2010/goschedule/store/redis v0.0.0-20200529094844-293e19e91d6e/go.mod h1:PAnnOODpWX6M8sc5MXV2whRoG9h8qCYghdOLBf5RqBU=
 github.com/json-iterator/go v1.1.6/go.mod h1:+SdeFBvtyEkXs7REEP0seUULqWtbJapLOCVDaaPEHmU=
 github.com/julienschmidt/httprouter v1.2.0/go.mod h1:SYymIcj16QtmaHHD7aYtjjsJG7VTCxuUUipMqKk8s4w=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1 h1:mweAR1A6xJ3oS2pRaGiHgQ4OO8tzTaLawm8vnODuwDk=
