@@ -2,41 +2,73 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
-
-	"github.com/jasonjoo2010/goschedule/core/worker"
 )
 
-type DemoStrategy struct {
-	worker.Worker
-	notifier chan int
+const (
+	REFRESH_PERIOD = 30 * time.Second
+	DELAY_UNIT     = 10 * time.Millisecond
+)
+
+type HotSellingRefresher struct {
+	needStop    bool
+	notifier    chan int
+	lastRefresh time.Time
 }
 
-func (demo *DemoStrategy) loop() {
-	i := 1
+func (w *HotSellingRefresher) delay(d time.Duration) {
+	// actually we change the cycle into 30 seconds
+	tmr := time.NewTimer(d)
 LOOP:
-	for {
-		fmt.Println("working: ", i)
+	for false == w.needStop {
 		select {
-		case <-demo.notifier:
+		case <-tmr.C:
 			break LOOP
 		default:
-			i++
-			time.Sleep(time.Second)
+			time.Sleep(DELAY_UNIT)
 		}
 	}
 }
 
-func (demo *DemoStrategy) Start(strategyId, parameter string) {
-	if demo.notifier == nil {
-		demo.notifier = make(chan int)
+func (w *HotSellingRefresher) refresh() {
+	time.Sleep(time.Duration(rand.Intn(500)+1) * time.Millisecond)
+	fmt.Println(time.Now().Format(time.RFC3339), "refreshed")
+	w.lastRefresh = time.Now()
+}
+
+func (w *HotSellingRefresher) refreshOrWait() {
+	// actually we change the cycle into 30 seconds
+	now := time.Now()
+	expire := w.lastRefresh.Add(REFRESH_PERIOD)
+	if now.Before(expire) {
+		w.delay(expire.Sub(now))
 	}
-	go demo.loop()
+	w.refresh()
+}
+
+func (w *HotSellingRefresher) loop() {
+	fmt.Println("enter the loop")
+	defer func() {
+		w.notifier <- 1
+		fmt.Println("exit the loop")
+	}()
+	for false == w.needStop {
+		w.refreshOrWait()
+	}
+}
+
+func (w *HotSellingRefresher) Start(strategyId, parameter string) {
+	if w.notifier == nil {
+		w.notifier = make(chan int)
+	}
+	go w.loop()
 	fmt.Println("worker started")
 }
 
-func (demo *DemoStrategy) Stop(strategyId, parameter string) {
+func (w *HotSellingRefresher) Stop(strategyId, parameter string) {
 	fmt.Println("prepare to stop")
-	demo.notifier <- 1
-	fmt.Println("worker exited")
+	w.needStop = true
+	<-w.notifier
+	fmt.Println("stopped")
 }
