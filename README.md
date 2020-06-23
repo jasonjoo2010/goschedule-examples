@@ -1,6 +1,8 @@
 # goschedule-examples
 
-Examples using goschedule in different scenarios as example
+Examples using goschedule in different scenarios as example.
+
+We offer three types of worker and it's suggested taking a tour one by one.
 
 ## Simple Worker
 
