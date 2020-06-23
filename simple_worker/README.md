@@ -33,3 +33,10 @@ Strategy:{"Id":"HotSellingRefresher","IpList":["127.0.0.1"],"MaxOnSingleSchedule
 You can import it on goschedule-console panel `Import`.
 
 And we use `redis` as the storage of scheduling(127.0.0.1:6379).
+
+## Test
+
+First we can boot up two or more processes of the worker by `go run simple_worker/*.go`.
+After `importing` and `resuming` the strategy on console panel we should observe one of the instances
+is selected and starts processing. You can try to kill idle instance, working instance and wait to see
+the scheduling process(a standby period up to 60 seconds).

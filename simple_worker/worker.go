@@ -32,6 +32,7 @@ LOOP:
 }
 
 func (w *HotSellingRefresher) refresh() {
+	// simulate the cost refreshing
 	time.Sleep(time.Duration(rand.Intn(500)+1) * time.Millisecond)
 	fmt.Println(time.Now().Format(time.RFC3339), "refreshed")
 	w.lastRefresh = time.Now()

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"os/signal"
 	"time"
@@ -11,7 +12,14 @@ import (
 	"github.com/jasonjoo2010/goschedule/store/redis"
 )
 
-var counterShared int = 0
+type HotSellingRefresher struct {
+}
+
+func (w *HotSellingRefresher) refresh() {
+	// simulate the cost refreshing
+	time.Sleep(time.Duration(rand.Intn(500)+1) * time.Millisecond)
+	fmt.Println(time.Now().Format(time.RFC3339), "refreshed")
+}
 
 func main() {
 	manager, err := core.New(redis.New("/schedule/demo/func", "127.0.0.1", 6379))
@@ -19,10 +27,9 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	worker.RegisterFunc("DemoFunc", func(strategyId, param string) {
-		fmt.Println("current: ", counterShared)
-		counterShared++
-		time.Sleep(time.Second)
+	refresher := HotSellingRefresher{}
+	worker.RegisterFunc("HotSellingRefresher", func(strategyId, parameter string) {
+		refresher.refresh()
 	})
 	manager.Start()
 	c := make(chan os.Signal, 1)
