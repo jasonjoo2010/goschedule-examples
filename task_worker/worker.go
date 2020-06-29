@@ -31,7 +31,6 @@ func (demo baseTask) Select(parameter, ownSign string, items []definition.TaskIt
 		}
 		demo.counterMap[item.Id] = cnt
 	}
-	time.Sleep(time.Second)
 	return result
 }
 
@@ -40,12 +39,12 @@ type demoSingleTask struct {
 }
 
 func (demo demoSingleTask) Execute(task interface{}, ownSign string) bool {
-	if demo.Name != "" {
-		fmt.Print("Task(", demo.Name, ") ", task, "\n")
-	} else {
-		fmt.Println("Task", task)
-	}
 	time.Sleep(100 * time.Millisecond)
+	if demo.Name != "" {
+		fmt.Print("Finish task(", demo.Name, ") ", task, "\n")
+	} else {
+		fmt.Println("Finish task", task)
+	}
 	return true
 }
 
@@ -54,8 +53,9 @@ type demoBatchTask struct {
 }
 
 func (demo demoBatchTask) Execute(tasks []interface{}, ownSign string) bool {
+	time.Sleep(100 * time.Millisecond)
 	builder := strings.Builder{}
-	builder.WriteString("Got ")
+	builder.WriteString("Finish ")
 	builder.WriteString(strconv.Itoa(len(tasks)))
 	builder.WriteString(" tasks:\n")
 	for _, task := range tasks {
@@ -68,6 +68,5 @@ func (demo demoBatchTask) Execute(tasks []interface{}, ownSign string) bool {
 		builder.WriteString("\n")
 	}
 	fmt.Println(builder.String())
-	time.Sleep(100 * time.Millisecond)
 	return true
 }

@@ -13,7 +13,7 @@ Strategy:{"Id":"HotSellingRefresher","IpList":["127.0.0.1"],"MaxOnSingleSchedule
 ## Cron
 
 This time we use the cron feature of strategy to make it be called every 30 seconds. It follows general cron pattern with
-seconds precise.
+seconds in precisition.
 
 ## Test
 
