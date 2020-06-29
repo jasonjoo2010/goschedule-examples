@@ -15,3 +15,7 @@ An example implementing a func worker: [func_worker](func_worker).
 ## Task
 
 Task introduces more configurable features. You can get a little insight through [task_worker](task_worker).
+
+## Worker use MySQL Backend
+
+Demostrate an mysql backend version of `simple worker`.
