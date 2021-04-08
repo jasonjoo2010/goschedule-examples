@@ -18,4 +18,4 @@ Task introduces more configurable features. You can get a little insight through
 
 ## Worker use MySQL Backend
 
-Demostrate an mysql backend version of `simple worker`.
+Demonstrate an mysql backend version of `simple worker`.
