@@ -11,6 +11,7 @@ import (
 	"github.com/jasonjoo2010/goschedule/core"
 	"github.com/jasonjoo2010/goschedule/core/worker"
 	"github.com/jasonjoo2010/goschedule/store/database"
+	"github.com/jasonjoo2010/goschedule/types"
 )
 
 func main() {
@@ -19,12 +20,16 @@ func main() {
 		fmt.Println("Create db instance error:", err.Error())
 		return
 	}
+	defer db.Close()
+
 	store := database.New("/schedule/demo/simple", db)
 	if store == nil {
 		fmt.Println("Create db store failed")
 		return
 	}
-	manager, err := core.New(store)
+	defer store.Close()
+
+	manager, err := core.New(types.ScheduleConfig{}, store)
 	if err != nil {
 		fmt.Println(err)
 		return

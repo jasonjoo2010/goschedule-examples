@@ -59,17 +59,21 @@ func (w *HotSellingRefresher) loop() {
 	}
 }
 
-func (w *HotSellingRefresher) Start(strategyId, parameter string) {
+func (w *HotSellingRefresher) Start(strategyId, parameter string) error {
 	if w.notifier == nil {
 		w.notifier = make(chan int)
 	}
 	go w.loop()
 	fmt.Println("worker started")
+
+	return nil
 }
 
-func (w *HotSellingRefresher) Stop(strategyId, parameter string) {
+func (w *HotSellingRefresher) Stop(strategyId, parameter string) error {
 	fmt.Println("prepare to stop")
 	w.needStop = true
 	<-w.notifier
 	fmt.Println("stopped")
+
+	return nil
 }

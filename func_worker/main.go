@@ -10,6 +10,7 @@ import (
 	"github.com/jasonjoo2010/goschedule/core"
 	"github.com/jasonjoo2010/goschedule/core/worker"
 	"github.com/jasonjoo2010/goschedule/store/redis"
+	"github.com/jasonjoo2010/goschedule/types"
 )
 
 type HotSellingRefresher struct {
@@ -22,7 +23,10 @@ func (w *HotSellingRefresher) refresh() {
 }
 
 func main() {
-	manager, err := core.New(redis.New("/schedule/demo/func", "127.0.0.1", 6379))
+	store := redis.New("/schedule/demo/func", "127.0.0.1", 6379)
+	defer store.Close()
+
+	manager, err := core.New(types.ScheduleConfig{}, store)
 	if err != nil {
 		fmt.Println(err)
 		return

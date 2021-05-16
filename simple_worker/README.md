@@ -27,7 +27,7 @@ can reach the point but we implement a delay-execute model this time.
 Here is the definition of the strategy for example:
 
 ```text
-Strategy:{"Id":"HotSellingRefresher","IpList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":1,"Kind":1,"Bind":"main.HotSellingRefresher","Parameter":"","Enabled":true,"CronBegin":"","CronEnd":"","Extra":null}
+Strategy:{"ID":"HotSellingRefresher","IPList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":1,"Kind":1,"Bind":"main.HotSellingRefresher","Parameter":"","Enabled":true,"CronBegin":"","CronEnd":"","Extra":null}
 ```
 
 You can import it on goschedule-console panel `Import`.

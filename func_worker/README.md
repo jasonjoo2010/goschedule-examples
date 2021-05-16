@@ -1,19 +1,19 @@
 # Func Worker Example
 
-Func worker is a very simple, triggerred based design worker model. We can focus
-on the logic need to be executed when triggerring. So we could optimize what we have
+Func worker is a very simple, triggered based design worker model. We can focus
+on the logic need to be executed when triggering. So we could optimize what we have
 done in `simple worker` example.
 
 ## Definition
 
 ```text
-Strategy:{"Id":"HotSellingRefresher","IpList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":1,"Kind":2,"Bind":"HotSellingRefresher","Parameter":"","Enabled":true,"CronBegin":"0/30 * * * * ?","CronEnd":"","Extra":null}
+Strategy:{"ID":"HotSellingRefresher","IPList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":1,"Kind":2,"Bind":"HotSellingRefresher","Parameter":"","Enabled":true,"CronBegin":"0/30 * * * * ?","CronEnd":"","Extra":null}
 ```
 
 ## Cron
 
 This time we use the cron feature of strategy to make it be called every 30 seconds. It follows general cron pattern with
-seconds in precisition.
+seconds in precision.
 
 ## Test
 

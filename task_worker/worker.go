@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jasonjoo2010/goschedule/core/definition"
+	"github.com/jasonjoo2010/goschedule/definition"
 )
 
 type baseTask struct {
@@ -20,16 +20,16 @@ func (demo baseTask) Select(parameter, ownSign string, items []definition.TaskIt
 	}
 	result := make([]interface{}, 0, len(items)*eachFetchNum)
 	for _, item := range items {
-		cnt, ok := demo.counterMap[item.Id]
+		cnt, ok := demo.counterMap[item.ID]
 		if !ok {
 			cnt = 1
 		}
 		fmt.Println("fetch for", item)
 		for i := 0; i < eachFetchNum; i++ {
-			result = append(result, fmt.Sprint(item.Id, ":", cnt))
+			result = append(result, fmt.Sprint(item.ID, ":", cnt))
 			cnt++
 		}
-		demo.counterMap[item.Id] = cnt
+		demo.counterMap[item.ID] = cnt
 	}
 	return result
 }

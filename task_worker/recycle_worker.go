@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/jasonjoo2010/goschedule/core/definition"
+	"github.com/jasonjoo2010/goschedule/definition"
 )
 
 type orderRecycleTask struct {

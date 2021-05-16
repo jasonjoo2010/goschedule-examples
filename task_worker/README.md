@@ -5,7 +5,7 @@ from general purpose workflows.
 
 ## Organization Model
 
-Logics are organized and splitted into `select()` and `execute()` which:
+Logics are organized and split into `select()` and `execute()` which:
 
 `select()` targets the `tasks` should be done or executed later;  
 `execute(task)` and `execute([]task)` focuses on how to get it/them done correctly or consistently.
@@ -17,14 +17,14 @@ And it's a litter complicated we can take a brief tour through several examples 
 ## Definition
 
 ```text
-Strategy:{"Id":"BatchExecutor","IpList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":2,"Kind":3,"Bind":"BatchExecutor","Parameter":"","Enabled":false,"CronBegin":"","CronEnd":"","Extra":null}
-Strategy:{"Id":"OrderRecycleTask","IpList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":1,"Kind":3,"Bind":"OrderRecycleTask","Parameter":"","Enabled":false,"CronBegin":"0 * * * * ?","CronEnd":"","Extra":null}
-Strategy:{"Id":"SingleExecutor","IpList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":1,"Kind":3,"Bind":"SingleExecutor","Parameter":"","Enabled":false,"CronBegin":"","CronEnd":"","Extra":null}
-Strategy:{"Id":"SingleStreamExecutor","IpList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":1,"Kind":3,"Bind":"SingleStreamExecutor","Parameter":"","Enabled":false,"CronBegin":"","CronEnd":"","Extra":null}
-Task:{"Id":"BatchExecutor","IntervalNoData":5000,"Interval":1000,"FetchCount":20,"BatchCount":5,"ExecutorCount":2,"Model":0,"Parameter":"","Bind":"batchExecutor","Items":[{"Id":"p0","Parameter":""},{"Id":"p1","Parameter":""}],"MaxTaskItems":0,"HeartbeatInterval":5000,"DeathTimeout":60000}
-Task:{"Id":"OrderRecycleTask","IntervalNoData":500,"Interval":0,"FetchCount":10,"BatchCount":1,"ExecutorCount":3,"Model":0,"Parameter":"","Bind":"orderRecycleTask","Items":[{"Id":"p0","Parameter":""}],"MaxTaskItems":0,"HeartbeatInterval":5000,"DeathTimeout":60000}
-Task:{"Id":"SingleExecutor","IntervalNoData":5000,"Interval":1000,"FetchCount":5,"BatchCount":1,"ExecutorCount":3,"Model":0,"Parameter":"","Bind":"singleExecutor","Items":[{"Id":"p0","Parameter":""}],"MaxTaskItems":0,"HeartbeatInterval":5000,"DeathTimeout":60000}
-Task:{"Id":"SingleStreamExecutor","IntervalNoData":500,"Interval":0,"FetchCount":5,"BatchCount":1,"ExecutorCount":3,"Model":1,"Parameter":"","Bind":"singleStreamExecutor","Items":[{"Id":"p0","Parameter":""}],"MaxTaskItems":0,"HeartbeatInterval":5000,"DeathTimeout":60000}
+Strategy:{"ID":"BatchExecutor","IPList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":2,"Kind":3,"Bind":"BatchExecutor","Parameter":"","Enabled":false,"CronBegin":"","CronEnd":"","Extra":null}
+Strategy:{"ID":"OrderRecycleTask","IPList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":1,"Kind":3,"Bind":"OrderRecycleTask","Parameter":"","Enabled":false,"CronBegin":"0 * * * * ?","CronEnd":"","Extra":null}
+Strategy:{"ID":"SingleExecutor","IPList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":1,"Kind":3,"Bind":"SingleExecutor","Parameter":"","Enabled":false,"CronBegin":"","CronEnd":"","Extra":null}
+Strategy:{"ID":"SingleStreamExecutor","IPList":["127.0.0.1"],"MaxOnSingleScheduler":0,"Total":1,"Kind":3,"Bind":"SingleStreamExecutor","Parameter":"","Enabled":false,"CronBegin":"","CronEnd":"","Extra":null}
+Task:{"ID":"BatchExecutor","IntervalNoData":5000,"Interval":1000,"FetchCount":20,"BatchCount":5,"ExecutorCount":2,"Model":0,"Parameter":"","Bind":"batchExecutor","Items":[{"ID":"p0","Parameter":""},{"ID":"p1","Parameter":""}],"MaxTaskItems":0,"HeartbeatInterval":5000,"DeathTimeout":60000}
+Task:{"ID":"OrderRecycleTask","IntervalNoData":500,"Interval":0,"FetchCount":10,"BatchCount":1,"ExecutorCount":3,"Model":0,"Parameter":"","Bind":"orderRecycleTask","Items":[{"ID":"p0","Parameter":""}],"MaxTaskItems":0,"HeartbeatInterval":5000,"DeathTimeout":60000}
+Task:{"ID":"SingleExecutor","IntervalNoData":5000,"Interval":1000,"FetchCount":5,"BatchCount":1,"ExecutorCount":3,"Model":0,"Parameter":"","Bind":"singleExecutor","Items":[{"ID":"p0","Parameter":""}],"MaxTaskItems":0,"HeartbeatInterval":5000,"DeathTimeout":60000}
+Task:{"ID":"SingleStreamExecutor","IntervalNoData":500,"Interval":0,"FetchCount":5,"BatchCount":1,"ExecutorCount":3,"Model":1,"Parameter":"","Bind":"singleStreamExecutor","Items":[{"ID":"p0","Parameter":""}],"MaxTaskItems":0,"HeartbeatInterval":5000,"DeathTimeout":60000}
 ```
 
 ## Single / Batch / Stream
@@ -33,7 +33,7 @@ First there are three demo tasks: Single executor, batch executor under normal s
 
 Further more, `singleStreamExecutor` is defined as a pre-defined instance which means if you want scheduler to use / share the same instance you can follow this.
 
-To demostrate the difference straightly between normal and stream model, you may got following outputs from `SingleExecutor` strategy:
+To demonstrate the difference straightly between normal and stream model, you may got following outputs from `SingleExecutor` strategy:
 
 ```log
 ....
@@ -81,12 +81,12 @@ So let's get to an actual example. Assume we want to "expire" any order that use
 
 After some discussions, we decide:
 
-1. Scan should be triggerred in every minute.
+1. Scan should be triggered in every minute.
 2. Scan should stop if no more order expired.
 3. Scan should continue if scanning cannot be done in one minute.
-4. Scan should not be triggerred if it was running.
+4. Scan should not be triggered if it was running.
 
-We use `orderRecycleTask` to simulate it. Because we don't need it to be partitioned so we just set it an arbitary task item `p0`. To make it scheduled periodicly we use cron expression. For detailed settings please refer it on you console panel. You may got the output as below:
+We use `orderRecycleTask` to simulate it. Because we don't need it to be partitioned so we just set it an arbitrary task item `p0`. To make it scheduled periodically we use cron expression. For detailed settings please refer it on you console panel. You may got the output as below:
 
 ```log
 2020-06-29T16:52:00+08:00 select 8 expired orders

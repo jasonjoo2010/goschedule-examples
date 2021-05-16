@@ -1,34 +1,25 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
+	"sync"
 	"time"
+
+	"github.com/jasonjoo2010/goschedule/utils"
 )
 
 const (
 	REFRESH_PERIOD = 30 * time.Second
-	DELAY_UNIT     = 10 * time.Millisecond
 )
 
 type HotSellingRefresher struct {
-	needStop    bool
-	notifier    chan int
-	lastRefresh time.Time
-}
+	ctx       context.Context
+	ctxCancel context.CancelFunc
+	wg        sync.WaitGroup
 
-func (w *HotSellingRefresher) delay(d time.Duration) {
-	// actually we change the cycle into 30 seconds
-	tmr := time.NewTimer(d)
-LOOP:
-	for false == w.needStop {
-		select {
-		case <-tmr.C:
-			break LOOP
-		default:
-			time.Sleep(DELAY_UNIT)
-		}
-	}
+	lastRefresh time.Time
 }
 
 func (w *HotSellingRefresher) refresh() {
@@ -38,38 +29,38 @@ func (w *HotSellingRefresher) refresh() {
 	w.lastRefresh = time.Now()
 }
 
-func (w *HotSellingRefresher) refreshOrWait() {
-	// actually we change the cycle into 30 seconds
-	now := time.Now()
-	expire := w.lastRefresh.Add(REFRESH_PERIOD)
-	if now.Before(expire) {
-		w.delay(expire.Sub(now))
-	}
-	w.refresh()
-}
-
-func (w *HotSellingRefresher) loop() {
+func (w *HotSellingRefresher) loop(ctx context.Context, wg *sync.WaitGroup) {
 	fmt.Println("enter the loop")
 	defer func() {
-		w.notifier <- 1
 		fmt.Println("exit the loop")
+		wg.Done()
 	}()
-	for false == w.needStop {
-		w.refreshOrWait()
+
+	ticker := time.NewTicker(REFRESH_PERIOD)
+	defer ticker.Stop()
+
+LOOP:
+	for {
+		w.refresh()
+		if !utils.DelayContext(ctx, REFRESH_PERIOD) {
+			break LOOP
+		}
 	}
 }
 
-func (w *HotSellingRefresher) Start(strategyId, parameter string) {
-	if w.notifier == nil {
-		w.notifier = make(chan int)
-	}
-	go w.loop()
-	fmt.Println("worker started")
+func (w *HotSellingRefresher) Start(strategyId, parameter string) error {
+	w.ctx, w.ctxCancel = context.WithCancel(context.Background())
+	w.wg.Add(1)
+	go w.loop(w.ctx, &w.wg)
+	fmt.Printf("worker started: %p\n", w)
+	return nil
 }
 
-func (w *HotSellingRefresher) Stop(strategyId, parameter string) {
-	fmt.Println("prepare to stop")
-	w.needStop = true
-	<-w.notifier
+func (w *HotSellingRefresher) Stop(strategyId, parameter string) error {
+	fmt.Printf("prepare to stop: %p\n", w)
+	w.ctxCancel()
+	w.wg.Wait()
+
 	fmt.Println("stopped")
+	return nil
 }
